@@ -1,0 +1,15 @@
+{
+  "name": "roll-stats",
+  "title": "Roll Stats",
+  "description": "Module for storing roll history and displaying roll statistics",
+  "version": "0.1.0",
+  "author": "davidd4",
+  "esmodules": [
+    "roll-stats.js"
+  ],
+  "styles": [
+    "roll-stats.css"
+  ],
+  "minimumCoreVersion": "0.7.9",
+  "compatibleCoreVersion": "0.7.9"
+}
