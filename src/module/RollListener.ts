@@ -48,15 +48,15 @@ class RollListener {
 
     /* Simple rolls */
 
-    private _extractSimpleRoll(roll, user) {
+    private async _extractSimpleRoll(roll, user) {
         const dice = roll.dice && roll.dice.length !== 0 ? roll.dice : roll._dice;
         if (!(dice?.length > 0))
             return;
-        dice.forEach(die => {
+        for (const die of dice) {
             const results = die.results || die.rolls;
             const rolls = results.map(roll => roll.result || roll.roll);
-            RollStats.addRolls(user, die.faces, rolls);
-        });
+            await RollStats.addRolls(user, die.faces, rolls);
+        }
     }
 
     /* Embedded rolls */
@@ -67,19 +67,19 @@ class RollListener {
         return [...message.matchAll(regexRoll)];
     }
 
-    private _parseEmbeddedRolls(matches, user) {
+    private async _parseEmbeddedRolls(matches, user) {
         if (!(matches && matches.length > 0)) return;
-        matches.forEach(element => {
+        for (const element of matches) {
             try {
                 const parsedEmbedded = JSON.parse(decodeURIComponent(element[1]));
                 const dice = this._extractEmbeddedDice(parsedEmbedded, user);
-                dice.forEach(die => {
-                    RollStats.addRolls(user, die.faces, die.rolls);
-                });
+                for (const die of dice) {
+                    await RollStats.addRolls(user, die.faces, die.rolls);
+                }
             }
             catch (error) {
             }
-        });
+        }
     }
 
     private _extractEmbeddedDice(messageJSON, user) {
@@ -108,7 +108,7 @@ class RollListener {
         return [...message.matchAll(rollsRegExp)];
     }
 
-    private _extractBR5eRolls(rolls, user) {
+    private async _extractBR5eRolls(rolls, user) {
         if (!(rolls?.length > 0)) return [];
         let dice = rolls.filter(x => (x[1] && x[2]))
             .reduce((rv, x) => {
@@ -121,9 +121,9 @@ class RollListener {
                 return rv;
             }, {});
 
-        Object.values(dice).forEach(v => {
-            RollStats.addRolls(user, v["faces"], v["rolls"]);
-        });
+        for (const die of Object.values(dice)) {
+            await RollStats.addRolls(user, die["faces"], die["rolls"]);
+        }
     }
 
 }

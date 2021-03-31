@@ -59,15 +59,15 @@ class Settings {
 	public getSetting(key: string): any {
         return this._getSetting(constants.moduleName, key);
     }
-    public setSetting(key: string, value: any) {
-        this._setSetting(constants.moduleName, key, value);
+    public async setSetting(key: string, value: any) {
+        await this._setSetting(constants.moduleName, key, value);
     }
 	
     _getSetting(module: string, key: string): any {
         return game.settings.get(module, key);
     }
-    _setSetting(module: string, key: string, value: any) {
-        game.settings.set(module, key, value);
+    async _setSetting(module: string, key: string, value: any) {
+        await game.settings.set(module, key, value);
     }
 
 }

@@ -2,7 +2,7 @@
 	"name": "roll-stats",
 	"title": "Roll Stats",
 	"description": "Module for storing roll history and displaying roll statistics",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"author": "davidd4",
 	"esmodules": ["roll-stats.js"],
 	"styles": ["roll-stats.css"],
@@ -10,5 +10,5 @@
 	"compatibleCoreVersion": "0.7.9",
 	"url": "https://github.com/davidd4/fvtt-roll-stats",
 	"manifest": "https://github.com/davidd4/fvtt-roll-stats/releases/latest/download/module.json",
-	"download": "https://github.com/davidd4/fvtt-roll-stats/releases/download/v0.1.0/roll-stats-v0.1.0.zip"
+	"download": "https://github.com/davidd4/fvtt-roll-stats/releases/download/v0.1.1/roll-stats-v0.1.1.zip"
 }

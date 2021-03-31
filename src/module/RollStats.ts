@@ -25,26 +25,26 @@ class RollStats {
         return RollStats._instance;
     }
 
-    resetCompleteStats() {
-        game.users.forEach(user => {
-            this._setRollHistory(user, {});
-        });
+    async resetCompleteStats() {
+        for (const user of game.users) {
+            await this._setRollHistory(user, {});
+        }
     }
 
-    resetSessionStats() {
-        game.users.forEach(user => {
+    async resetSessionStats() {
+        for (const user of game.users) {
             let rollHistory = this._getRollHistory(user) ?? {};
             if (rollHistory["session"] != null) {
                 rollHistory["session"] = {};
-                this._setRollHistory(user, rollHistory);
+                await this._setRollHistory(user, rollHistory);
             }
-        });
+        }
     }
 
-    resetViaSadness() {
+    async resetViaSadness() {
         let sadnessRollHistory = SadnessChan.getRollHistory();
 
-        game.users.forEach(user => {
+        for (const user of game.users) {
             let rollHistory = {};
             let userRolls = SadnessChan.getUserRollHistory(sadnessRollHistory, user);
             if (userRolls != null && userRolls.length) {
@@ -55,8 +55,8 @@ class RollStats {
                     diceMap[dieType] = rolls;
                 }
             }
-            this._setRollHistory(user, rollHistory);
-        });
+            await this._setRollHistory(user, rollHistory);
+        }
     }
 
     getUserData(user, dieType) : { allTime: UserRollStats; session: UserRollStats } {
@@ -74,7 +74,7 @@ class RollStats {
         };
     }
 
-    addRolls(user, size, rolls) {
+    async addRolls(user, size, rolls) {
         let dieType = this._getDieType(size);
         if (dieType == null) return;
 
@@ -93,8 +93,7 @@ class RollStats {
         rollHistory["all-time"] = allTimeMap;
         rollHistory["session"] = sessionMap;
 
-        this._setRollHistory(user, rollHistory);
-
+        await this._setRollHistory(user, rollHistory);
     }    
 
     private _createUserRollStats(rolls: Array<number>, dieType) : UserRollStats {
@@ -141,10 +140,10 @@ class RollStats {
         return rollHistory[user.id];
     }
 
-    private _setRollHistory(user, userRollHistory) {
+    private async _setRollHistory(user, userRollHistory) {
         let rollHistory = Settings.getSetting(Settings.SETTING_KEYS.ROLL_HISTORY);
         rollHistory[user.id] = userRollHistory;
-        Settings.setSetting(Settings.SETTING_KEYS.ROLL_HISTORY, rollHistory);
+        await Settings.setSetting(Settings.SETTING_KEYS.ROLL_HISTORY, rollHistory);
     }
 
     private _getDieType(size) : string {
