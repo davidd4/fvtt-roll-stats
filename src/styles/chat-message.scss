@@ -44,13 +44,13 @@
         content: attr(data-value);
         bottom: 100%;
         margin-bottom: 4px;
-        font-size: x-small;
+        font-size: 50%;
     }
     & > li:after {
         content: attr(data-label);
         top: 100%;
         margin-top: 6px;
-        font-size: x-small;
+        font-size: 50%;
     }
     & > li[data-value='0'] {
         height: 0px;

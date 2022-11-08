@@ -25,8 +25,8 @@ class RollListener {
         if (!(userId && game.user.hasRole(4)))
             return;
         const user = game.users.find(x => x.id == userId);
-        this._extractRoll(chatMessage?._roll, chatMessage, user);
-    }    
+        this._extractRoll(chatMessage?.rolls[0] || null, chatMessage, user);
+    }
 
     private _extractRoll(roll, chatMessage, user) {
         if (roll) {
